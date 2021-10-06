@@ -1,0 +1,19 @@
+const postsDB = require('../store/postsDB');
+//use randomBytes to generate random IDs for the post sent by user
+const { randomBytes } = require('crypto')
+module.exports = {
+    createPost: async (req, res) => {
+        const title = req.body.title;
+        const id = randomBytes(4).toString('hex')
+        // save to DB
+        postsDB[id] = {
+            id, title
+        }
+        //send response to client
+        await res.status(201).send(postsDB[id])
+    },
+    getAllPost: (req, res) => {
+        //fetch all post
+        res.status(200).send(postsDB)
+    }
+}
