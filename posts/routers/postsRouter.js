@@ -6,6 +6,7 @@ const postControllers = require('../controllers/postControllers')
 
 router.get('/posts', postControllers.getAllPost)
 router.post('/posts', postControllers.createPost)
+router.post('/events', postControllers.receiveEvents)
 
 
 module.exports = router;
