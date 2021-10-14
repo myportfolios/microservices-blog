@@ -7,21 +7,25 @@ const app = express();
 //use middlewares
 app.use(bodyParser);
 
-app.post("/events",  (req, res) => {
+app.post("/events", (req, res) => {
   //The event bus will make a POST call to the fllg urls with the 'event' data
 
-      // whatever was sent in the request body (e.g,json datatype) will be the event
+  // whatever was sent in the request body (e.g,json datatype) will be the event
   const event = req.body;
-     axios.post("http://localhost:8000/events", event).catch((e) => { //query service
-    console.log(e.message)
-    });
-     axios.post("http://localhost:8001/events", event).catch((e) => {
-        console.log(e.message)
-        }); //posts service endpoint
-     axios.post("http://localhost:8002/events", event).catch((e) => {
-        console.log(e.message)
-        }); //comments service endpoint
-  
+  console.log("event", event);
+  axios.post("http://localhost:8000/events", event).catch((e) => {
+    //query service
+    console.log(e.message);
+  });
+  axios.post("http://localhost:8001/events", event).catch((e) => {
+    console.log(e.message);
+  }); //posts service endpoint
+  axios.post("http://localhost:8002/events", event).catch((e) => {
+    console.log(e.message);
+  }); //comments service endpoint
+  axios.post("http://localhost:8003/events", event).catch((e) => {
+    console.log(e.message);
+  }); //moderation service
 
   res.send({ status: "OK" });
 });
