@@ -11,6 +11,7 @@ exports.getEventsFromEventBusController = async (req, res) => {
   const { type, data } = req.body;
   //check if the content includes 'orange;
   if (type === "CommentCreated") {
+    //moderate comment
     const status = data.content.includes("orange") ? "rejected" : "approved";
     //return the payload with an updated 'status' and 'type' to the event-bus
     await axios.post("http://localhost:4005/events", {

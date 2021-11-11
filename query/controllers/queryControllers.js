@@ -7,6 +7,19 @@ exports.getPostsFromQueryServController = async (req, res) => {
 
 exports.eventsFromEventBusController = async (req, res) => {
   const { type, data } = req.body;
+  //handle event from event-bus based on 'type'
+  handleEvent(type, data);
+  //send back response
+  res.send({});
+};
+
+/**
+ * @param function handleEvent(type, data) {}
+ * a function that handles all the logic of constructing a 'post' obj based on the type
+ * of comment.
+ * The 'post' si then sved in the store
+ */
+exports.handleEvent = (type, data) => {
   if (type === "PostCreated") {
     const { id, title } = data;
     posts[id] = { id, title, comments: [] }; //adds the id & title on the 'posts' obj imported from store
@@ -14,7 +27,9 @@ exports.eventsFromEventBusController = async (req, res) => {
   }
   if (type === "CommentCreated") {
     const { id, content, postId, status } = data;
+    //get actual pos from db
     const post = posts[postId];
+    //update the post with the user comment
     post && post.comments.push({ id, content, status });
   }
   //if the 'type' is 'CommentUpdated'
@@ -29,8 +44,6 @@ exports.eventsFromEventBusController = async (req, res) => {
     comment.content = content;
     //update the content
   }
-  //send back response
-  res.send({});
 };
 
 // exports.eventsFromEventBusController = async ({body:{type, data:{id, title, content, postId}}}, res) => {
