@@ -1,0 +1,96 @@
+                                                 **** Docker ***********
+ * Docker is a platform or ecosystem around creating and running containers.
+    * The Docker ecosystem includes:
+      ** Docker Client
+      ** Docker Server
+      ** Docker machines
+      ** Docker Images
+      ** Docker Hub
+      ** Docker Compose
+
+ * Docker is an isolated computing environment that provides all the necessary dependencies to run any app or program .
+ * We create a Docker container for each of our service/app.
+ * Wwhen we run the Docker command to install an application, the Docker cli reaches out to the Docker hub 
+      which generates a single fine called "Image".
+ * This single file consists of all the dependencies and config required to run a 
+    specific program.
+ * The Container is an instance of an Image which runs a program
+
+                                               ******* Doker Commands ***
+
+ 1. Docker ps - it list all the running containers on our VM
+              - we also use it to get the ID of a running container for further use 
+ 2. Docker ps --all - It's used to list out all stopped containers
+ 3. Docker run   - This command is  combination of the 'Docker create' and 'Docker Start' Commands
+ 4. Docker create - This command preps the file system of the Image for use within the container. Running it generates
+                    a CONTAINER_ID
+ 5. Docker start - This command runs the 'run command' of the Image. Running the command with 
+        the 'a' flag enables it to watch out for output from the container which ic then
+        displayed in our terminal. e.g 'docker start -a CONTAINER_ID'
+6. docker start -a CONTAINER_ID : This command also restarts a stopped container
+7. docker system prune - will delete all stopped and unused containers.(Note: This also deletes the 'build cache')
+ *** The build cache' is any image fetched from docker hub *******
+8. docker logs CONTAINER_ID - This command logs all the emitted info from a container
+9. 'docker stop CONTAINER_ID' or 'docker kill CONTAINER_ID' stops a running container.
+
+                            ****** 'docker stop CONTAINER_ID' VS docker kill CONTAINER_ID ********
+
+    * The 'docker stop CONTAINER_ID' issues a SIGTERM (Termination Signal) to the container, giving it  some time (abt 10 sec)to do some 
+      other activities, like clean up, saving, etc, and then stop the container when it's done / shut itself down.
+    * The 'docker kill CONTAINER_ID' issues a 'SIGKILL' (Kill Signal) command which tells the container to stop right away!  
+
+                                ******* Executing Commands in Running containers ***********************
+* 'docker exec -it CONTAINER_ID <command to execute>'
+* the '-it' flag allows us to provide input to the container
+* the 'exec' flag is used to run another command
+*  The '-it' flag enables input from user terminal to the STDIN of the running process, and output from the STDOUT of the
+   running process to the user terminal. (hence, communication from terminal to running process and vise versa)
+
+                                ***** The  Purpose of the 'it' flag *********
+ * The 'it' flag is actually 2 seprate flags, ie, -i & -t
+ * The '-i' flag implies that everything that's typed from the terminal gets attached to redis (for example) STDIN (Standard In) 
+ * The  '-t' flags makes sure that both the inputs from my terminal and the emitted output from the process STDOUT (standard Out)
+   gets displayed neatly in my screen         
+
+                                        ***** The  Purpose of the 'exec' command *********                      
+* Running 'exec' with the 'sh' command enables a full functional Linux terminal within the container.
+  ** 'docker exec -it <CONTAINER_ID> sh'
+* This enables us to run all Linux commands like cd, ls, export, echo, etc, within the Container.
+* NOTE - 'Cntrl + C or Ctrl + D can be used to exit a container when running in the shell/ Command Processor (sh) mode
+
+                                                 ***** Starting with a shell *********
+* 'docker run -it <Image> sh'  
+* busybox example:  'docker run -it busybox sh'   
+
+                                                ***** Container Isolation *********
+* 2 containers DON'T automatically share their file system               
+
+                                            ***** Creating custom Docker Image *********
+Docker file -------------> Docker Client ------------> Docker Server -------------> Usable Image
+(Docker File contains configurations
+to define how ourcontainer
+should behave)                  
+
+
+                                     ***** Creating a docker file *********
+1. Specify a base image
+2. Run some commands to install additional programs
+3. Specify a command to run on container startup
+
+
+                                     ***** Tagging a docker image *********
+* this is when we want to give a unique generalized name to our custom Image making it easier to run                                     
+  with the 'docker run ------' command
+  ** -t -----> your docker ID ------> slash (/) ------> Repo/Project Name ------> Column (:) ----->Version ---> dot (.)
+        *** eg, '-t 23101/redis:latest .'
+        *where the dot (.) is the build context - it specifies the directory of files/folders to use for the build
+                                                  ***** Kubernetes *********
+
+ * Kubernetes is a tool for runninng a bunch of different containers.
+ * We give it some configuration to describe how we want our containers (apps) to run and interact
+   with each other.
+ * We use Kubernetes in microservices architecture to make communication very easy
+   and straightforward.
+
+   Kubernetes cluster consist of 1 to many virtual machines, each VM or Node is meant to run
+   one of our apps/services (that is embeded in a container)

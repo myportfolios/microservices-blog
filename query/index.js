@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const bodyParser = express.json();
-const { handleEvent } = require("./controllers/queryControllers");
+const { handleEvent } = require("./util/utils");
 
 //import router
 const router = require("./routers/index");
