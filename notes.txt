@@ -91,6 +91,29 @@ should behave)
    with each other.
  * We use Kubernetes in microservices architecture to make communication very easy
    and straightforward.
+ * With kubernates, we create containers using an Image of our service, along with some instructions in a configuration file.
+ * Kubernates would first check our local machine for the Image by default, then resort to the docker hub if the image isn't present on our machine.
 
    Kubernetes cluster consist of 1 to many virtual machines, each VM or Node is meant to run
    one of our apps/services (that is embeded in a container)
+* We interact with kubernates from the cli using the command 'kubectl'.
+* In addition to creation of pods for our container(s),  kubernates also creates a Deployment which ensures that we have the required numbers of containers at all times.
+* If one container crashes, the Deployment would restart it.
+
+                                           ***** Pod *********
+* A pod wraps up a container and can contain one or more containers. Technically, it's different from a container
+
+                                        ***** Kubernetes Service *********
+
+* It abstracts all the difficulties involved in handling networking among different microservice.
+* It takes in a request and forwards it to the appropraite container or microservice
+it gives us access to running pods/containers inside our kubernetes cluster
+                                            ***** Kubernetes Config File *********
+* It consist of instructions on the number of containers to be craeted from an Image
+* It also includes instructions that states that the these containers should be accessible from network                                        
+
+                                            ***** Infra folder *********
+* The infra folder is short for 'infrastructure'. It will contain a kubernetes folder which houses all our configuration (YAML) files.    
+
+                                ****** Docker VS Kubernetes *************
+* Docker is used to run a container while kubernetes is used to runa  cluster of containers.                               
