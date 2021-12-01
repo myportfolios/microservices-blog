@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service # Type of object to be created
+metadata:
+  name: posts-service # the name of the service to be created within our cluster
+spec: # customizes how the service will behave
+  type: NodePort # the type of service we are creating
+  selector: # enables the service to know the exact pod(s) to find and expose to the outside world. In this case, it's the 'posts' pod
+    app: posts
+  ports: # a list/array (-) of all the ports to be exposed on the target pod (in this case, the 'posts' pod). it should match the port that our app is listening on in index.js of 'posts' service
+    - name: posts # could be named anything. just convention to name after the service ('posts'-service)
+      protocol: TCP
+      port: 8001 # the port for the Node Port service we are creating. it doesn't have to be identical to the targetPort
+      targetPort: 8001 # the application within our pod/container that we want to send traffic to.
+

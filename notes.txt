@@ -109,6 +109,16 @@ should behave)
 * It takes in a request and forwards it to the appropraite container or microservice
 it gives us access to running pods/containers inside our kubernetes cluster
 * it provides networking between pods.
+
+                                        ***** Types of Service *********
+* Cluster IP: Sets up an easy-to-remember URL to access a pod. It only exposes pods within/in the cluster 
+
+* Node Port: Makes a pod accessible from outside the cluster. Usually only used for dev purposes.
+
+* Load Balancer: Makes a pod accessible from outside the cluster. This is the right way to expose a pod to the outside world.
+
+* External Name: Redirects an in-cluster request to z CNAME url.....I need not worry about this one.
+
                                             ***** Kubernetes Config File *********
 * It consist of instructions on the number of containers to be craeted from an Image
 * It also includes instructions that states that the these containers should be accessible from network                                        
@@ -118,3 +128,7 @@ it gives us access to running pods/containers inside our kubernetes cluster
 
                                 ****** Docker VS Kubernetes *************
 * Docker is used to run a container while kubernetes is used to runa  cluster of containers.                               
+
+
+NOTE!!
+* Services, Pods, Deployment are all refered to aas 'Objects' in Kubernetes. Creating these objects require creating a config file that will be fed to our cluster
