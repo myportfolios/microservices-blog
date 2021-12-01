@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-deployment
+spec:
+  replicas: 1 # replicas is the number of pods we want to create
+  selector:
+    matchLabels: #looks at all the created pods and finds one with label 'app' matching 'posts' 
+      app: posts #label
+  template:
+    metadata:
+      labels:  
+        app: posts
+    spec:  #specification of the pod to be created
+      containers:
+        - name: posts # '-' means array
+          image: 23101/posts
+
+
+# selector and metadata tells the deployment the pod(s) to manage

@@ -108,6 +108,7 @@ should behave)
 * It abstracts all the difficulties involved in handling networking among different microservice.
 * It takes in a request and forwards it to the appropraite container or microservice
 it gives us access to running pods/containers inside our kubernetes cluster
+* it provides networking between pods.
                                             ***** Kubernetes Config File *********
 * It consist of instructions on the number of containers to be craeted from an Image
 * It also includes instructions that states that the these containers should be accessible from network                                        
