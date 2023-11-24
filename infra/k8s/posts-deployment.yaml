@@ -19,3 +19,17 @@ spec: # 'spec' specifies how the Deployment should behave
 
 # selector and metadata tells the deployment the pod(s) to manage
 # The 'labels' in Deployments are very similar in nature to the 'selector' in the 'Service' object type
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  type: ClusterIP # Even when 'type' is not specified, 'ClusterIP' is used by default.
+  ports: 
+    - name: posts
+      protocol: TCP
+      port: 8001
+      targetPort: 8001

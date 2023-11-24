@@ -15,3 +15,18 @@ spec:
       containers:
         - name: event-bus # '-' means array
           image: 23101/event-bus
+--- # Marks the end of a configuration / the beginning of another. In this case, we have the Deployment & Service config for a single pod in the same file. 
+apiVersion: v1
+kind: Service
+metadata: 
+  name: event-bus-srv
+spec:
+  selector:
+    app: event-bus
+  type: ClusterIP # Even when 'type' is not specified, 'ClusterIP' is used by default.
+  ports: 
+    - name: event-bus
+      protocol: TCP
+      port: 4005
+      targetPort: 4005
+
