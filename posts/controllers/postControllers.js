@@ -24,8 +24,10 @@ module.exports = {
     //fetch all post
     res.status(200).send(postsDB)
   },
-  receiveEvents: (req, res) => {
-    console.log(`received event ${res.body}`)
+  receiveEvents: async (req, res) => {
+    const body = await res?.body
+    console.log(`received event ${body}`)
+    console.log(`type is ${body?.type}`)
     res.send({})
   },
 }
