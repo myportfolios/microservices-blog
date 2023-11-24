@@ -137,3 +137,20 @@ NOTE!!
 *** .dockerignore file ****
 * We use the .dockerignore file to exempt files and folders we do not want to copy during the build phase of our image.
 * folders like node_modules should be ignored when copying files and dependencies to the WORKINGDIR of our container, thus, added to .dockerignore file.
+
+
+******************* Colacating multiple configuration objects in a single file ****************
+* Rather than having seprate files for deployment and service creation of a related pod,
+  we can have both objects (Deployment and Service) for a particular pod in a single file.
+* This is done by adding "---", i.e, 3 dashes at the end of a configuration/ before the start of another.
+
+********** Connecting to a pod through its Service type *********
+* With the use of kubernetes, pods within a cluster communicate via their service type (Cluster IP - which is for communication btw pods in a cluster).
+* In this case, communication between/among pods is through their service names whcih can be gotten by running:
+  "kubectl get services".
+* This name is then used to make a http request. For example,
+    - podA runs containerA, and the Service name is service-A 
+    - podB runs containerB, and the Service name is service-Balancer
+  if podA needs to communicate with podB the request from podA will be - http://service-A:PORT
+  if podB needs to communicate with podA the request from podB will be - http://service-B:PORT
+Note - containerA and containerB are microservices. PORT represents the port where both containers are running.
