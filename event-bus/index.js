@@ -21,7 +21,7 @@ app.post('/events', (req, res) => {
     //query service
     console.log(e.message)
   })
-  axios.post('http://localhost:8001/events', event).catch((e) => {
+  axios.post('http://posts-clusterip-srv:8001/events', event).catch((e) => {
     console.log(e.message)
   }) //posts service endpoint
   axios.post('http://localhost:8002/events', event).catch((e) => {
