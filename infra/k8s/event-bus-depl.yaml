@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-deployment #the name of the Deployment running in our cluster
+spec:
+  replicas: 1 # replicas is the number of pods we want to create
+  selector:
+    matchLabels: #looks at all the created pods and finds one with label 'app' matching 'event-bus' 
+      app: event-bus #label
+  template: # describes how the pod(s) should be created by the Deployment
+    metadata:
+      labels:  
+        app: event-bus # an identifier/label for the pod that will be created by the Deployment
+    spec:  #specification of the pod to be created
+      containers:
+        - name: event-bus # '-' means array
+          image: 23101/event-bus

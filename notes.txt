@@ -25,7 +25,7 @@
  4. Docker create - This command preps the file system of the Image for use within the container. Running it generates
                     a CONTAINER_ID
  5. Docker start - This command runs the 'run command' of the Image. Running the command with 
-        the 'a' flag enables it to watch out for output from the container which ic then
+        the 'a' flag enables it to watch out for output from the container which is then
         displayed in our terminal. e.g 'docker start -a CONTAINER_ID'
 6. docker start -a CONTAINER_ID : This command also restarts a stopped container
 7. docker system prune - will delete all stopped and unused containers.(Note: This also deletes the 'build cache')
@@ -47,6 +47,7 @@
    running process to the user terminal. (hence, communication from terminal to running process and vise versa)
 
                                 ***** The  Purpose of the 'it' flag *********
+ ** NOTE - Every process we create in a linux environment has 3 communication channels attached to it, they are  STDIN, STDOUT, STDERR                               
  * The 'it' flag is actually 2 seprate flags, ie, -i & -t
  * The '-i' flag implies that everything that's typed from the terminal gets attached to redis (for example) STDIN (Standard In) 
  * The  '-t' flags makes sure that both the inputs from my terminal and the emitted output from the process STDOUT (standard Out)
@@ -120,7 +121,7 @@ it gives us access to running pods/containers inside our kubernetes cluster
 * External Name: Redirects an in-cluster request to z CNAME url.....I need not worry about this one.
 
                                             ***** Kubernetes Config File *********
-* It consist of instructions on the number of containers to be craeted from an Image
+* It consist of instructions on the number of containers to be created from an Image
 * It also includes instructions that states that the these containers should be accessible from network                                        
 
                                             ***** Infra folder *********
@@ -132,3 +133,7 @@ it gives us access to running pods/containers inside our kubernetes cluster
 
 NOTE!!
 * Services, Pods, Deployment are all refered to aas 'Objects' in Kubernetes. Creating these objects require creating a config file that will be fed to our cluster
+
+*** .dockerignore file ****
+* We use the .dockerignore file to exempt files and folders we do not want to copy during the build phase of our image.
+* folders like node_modules should be ignored when copying files and dependencies to the WORKINGDIR of our container, thus, added to .dockerignore file.

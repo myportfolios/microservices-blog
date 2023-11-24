@@ -1,16 +1,16 @@
-apiVersion: apps/v1
+apiVersion: apps/v1 # unlike Pods which are in the bucket "v1", Deployments are in the bucket 'apps/v1'
 kind: Deployment
 metadata:
-  name: posts-deployment
-spec:
+  name: posts-deployment #the name of the Deployment running in our cluster
+spec: # 'spec' specifies how the Deployment should behave
   replicas: 1 # replicas is the number of pods we want to create
   selector:
     matchLabels: #looks at all the created pods and finds one with label 'app' matching 'posts' 
       app: posts #label
-  template:
+  template: # describes how the pod(s) should be created by the Deployment
     metadata:
       labels:  
-        app: posts
+        app: posts # an identifier/label for the pod that will be created by the Deployment
     spec:  #specification of the pod to be created
       containers:
         - name: posts # '-' means array
@@ -18,3 +18,4 @@ spec:
 
 
 # selector and metadata tells the deployment the pod(s) to manage
+# The 'labels' in Deployments are very similar in nature to the 'selector' in the 'Service' object type
