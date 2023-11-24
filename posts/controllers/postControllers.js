@@ -25,6 +25,7 @@ module.exports = {
     res.status(200).send(postsDB)
   },
   receiveEvents: (req, res) => {
+    console.log(`received event ${res.body}`)
     res.send({})
   },
 }
