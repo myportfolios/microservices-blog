@@ -138,6 +138,24 @@ NOTE!!
 * We use the .dockerignore file to exempt files and folders we do not want to copy during the build phase of our image.
 * folders like node_modules should be ignored when copying files and dependencies to the WORKINGDIR of our container, thus, added to .dockerignore file.
 
+************** Steps to update a Deployment when there are changes in source code ************
+
+1.Ensure that the image is specified as the latest in the yaml config file.
+  This is achieved by leaving the image without a version appended or with 'latest' tag appended in the pod spec section. See both options below:
+  Option 1: image: <image-tag> (for example - docker-username/image-name)
+  Option 2: image: <image-tag>:latest
+
+2. Make changes to source code. if changes already exist, re-build image
+   run 'docker build -t <image-tag> ."
+
+3. Push the new image to Docker Hub registry by running:
+   'docker push <image-tag>'
+4. After image is successfully pushed to Docker hub, run the command below to update the deployment with the latest image:
+   "kubectl rollout restart deployment <deployment-name>"
+   Note - you can run "kubectl get deployments" and copy the name of the deployment.
+5. You can run "kubectl get deployments" to view deployments that are running, "kubectl get pods" 
+   to list the running pods created from the deployment (copy the pod name if needed), and "k logs <pod-name>" to view the logs emitted 
+   from the pod when the pod/container started.
 
 ******************* Colacating multiple configuration objects in a single file ****************
 * Rather than having seprate files for deployment and service creation of a related pod,
