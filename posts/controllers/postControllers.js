@@ -25,9 +25,7 @@ module.exports = {
     res.status(200).send(postsDB)
   },
   receiveEvents: async (req, res) => {
-    const body = await res?.body
-    console.log(`received event ${body}`)
-    console.log(`type is ${body?.type}`)
+    console.log(`received event ${req?.body.type}`)
     res.send({})
   },
 }
