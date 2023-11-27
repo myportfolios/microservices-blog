@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const { default: axios } = require('axios')
 
 /**
  *
@@ -8,21 +8,21 @@ const { default: axios } = require("axios");
  * We get the 'type' and 'data' from req.body
  */
 exports.getEventsFromEventBusController = async (req, res) => {
-  const { type, data } = req.body;
+  const { type, data } = req.body
   //check if the content includes 'orange;
-  if (type === "CommentCreated") {
+  if (type === 'CommentCreated') {
     //moderate comment
-    const status = data.content.includes("orange") ? "rejected" : "approved";
+    const status = data.content.includes('orange') ? 'rejected' : 'approved'
     //return the payload with an updated 'status' and 'type' to the event-bus
-    await axios.post("http://localhost:4005/events", {
-      type: "CommentModerated",
+    await axios.post('event-bus-srv:4005/events', {
+      type: 'CommentModerated',
       data: {
         status,
         id: data.id,
         postId: data.postId,
         content: data.content,
       },
-    });
+    })
   }
-  res.send({});
-};
+  res.send({})
+}

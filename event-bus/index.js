@@ -17,19 +17,24 @@ app.post('/events', (req, res) => {
   //push the received event into the array variable - events
   events.push(event)
   console.log('event', event)
-  // axios.post('http://localhost:8000/events', event).catch((e) => {
-  //   //query service
-  //   console.log(e.message)
-  // })
+  //1.query service
+  axios.post('http://query-srv:8000/events', event).catch((e) => {
+    console.log(e.message)
+  })
+  //2.posts service endpoint
   axios.post('http://posts-clusterip-srv:8001/events', event).catch((e) => {
     console.log(e.message)
-  }) //posts service endpoint
-  // axios.post('http://localhost:8002/events', event).catch((e) => {
-  //   console.log(e.message)
-  // }) //comments service endpoint
-  // axios.post('http://localhost:8003/events', event).catch((e) => {
-  //   console.log(e.message)
-  // }) //moderation service
+  })
+
+  //3.comments service endpoint
+  axios.post('http://comments-srv:8002/events', event).catch((e) => {
+    console.log(e.message)
+  })
+
+  //4.moderation service
+  axios.post('http://moderation-srv:8003/events', event).catch((e) => {
+    console.log(e.message)
+  })
 
   res.send({ status: 'OK' })
 })

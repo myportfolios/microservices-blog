@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-deployment #the name of the Deployment running in our cluster
+spec:
+  replicas: 1 # replicas is the number of pods we want to create
+  selector:
+    matchLabels: #looks at all the created pods and finds one with label 'app' matching 'event-bus'
+      app: moderation #label
+  template: # describes how the pod(s) should be created by the Deployment
+    metadata:
+      labels:
+        app: moderation # an identifier/label for the pod that will be created by the Deployment
+    spec:  #specification of the pod to be created
+      containers:
+        - name: moderation # '-' means array
+          image: 23101/moderation
+--- # Marks the end of a configuration / the beginning of another. In this case, we have the Deployment & Service config for a single pod in the same file.
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector:
+    app: moderation
+  type: ClusterIP # Even when 'type' is not specified, 'ClusterIP' is used by default.
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 8003
+      targetPort: 8003

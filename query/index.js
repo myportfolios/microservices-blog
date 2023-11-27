@@ -20,7 +20,7 @@ app.listen(8000, async () => {
     list of all events. We can they update our service wwwith any event that was missed
     while service was down
     */
-  const res = await axios.get('http://localhost:4005/events')
+  const res = await axios.get('http://event-bus-srv:4005/events')
   for (let event of res.data) {
     //log out the type of event been processed from the list of event
     console.log(`Processing event: ${event.type}`)
