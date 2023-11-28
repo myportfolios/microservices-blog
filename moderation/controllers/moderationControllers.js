@@ -24,5 +24,6 @@ exports.getEventsFromEventBusController = async (req, res) => {
       },
     })
   }
+  console.log(`received event ${type}`)
   res.send({})
 }

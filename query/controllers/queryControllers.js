@@ -1,18 +1,19 @@
 //import the posts with comments store
-const posts = require("../store/postsWithCommentsDB");
-const { handleEvent } = require("../util/utils");
+const posts = require('../store/postsWithCommentsDB')
+const { handleEvent } = require('../util/utils')
 exports.getPostsFromQueryServController = async (req, res) => {
   //send back the entire post object
-  res.send(posts);
-};
+  res.send(posts)
+}
 
 exports.eventsFromEventBusController = async (req, res) => {
-  const { type, data } = req.body;
+  const { type, data } = req.body
   //handle event from event-bus based on 'type'
-  handleEvent(type, data);
+  handleEvent(type, data)
   //send back response
-  res.send({});
-};
+  console.log(`received event ${type}`)
+  res.send({})
+}
 
 // exports.eventsFromEventBusController = async ({body:{type, data:{id, title, content, postId}}}, res) => {
 // if(type === 'PostCreated'){

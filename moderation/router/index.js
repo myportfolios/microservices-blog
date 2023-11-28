@@ -1,11 +1,11 @@
-const express = require("express");
+const express = require('express')
 
-const router = express.Router();
+const router = express.Router()
 
 //import controllers
 const {
   getEventsFromEventBusController,
-} = require("../controllers/moderationControllers");
+} = require('../controllers/moderationControllers')
 
-router.post("/events", getEventsFromEventBusController);
-module.exports = router;
+router.post('/events', getEventsFromEventBusController)
+module.exports = router

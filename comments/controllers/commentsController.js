@@ -59,5 +59,6 @@ exports.receiveEvents = async (req, res) => {
       },
     })
   }
+  console.log(`received event ${type}`)
   res.send({})
 }
