@@ -172,3 +172,35 @@ NOTE!!
   if podA needs to communicate with podB the request from podA will be - http://service-A:PORT
   if podB needs to communicate with podA the request from podB will be - http://service-B:PORT
 Note - containerA and containerB are microservices. PORT represents the port where both containers are running.
+
+
+******* Wiring up React App to the services using Load Balancer (Ingress) *********
+* A Dockerfile will be created for  'React Dev Server', and a Deployment is used to create a pod (similar to what was done for the other services)
+* The pod will be in the same cluster along with other pods.
+* The 'React Dev Server' is only used to serve the initial HTML, CSS and JavaScript file as requested from the client/browser when the website/app is visited.
+* Afterwards, there is no relevance for the 'React Dev Server'. Note, however, that the initial request from client is made with React running in the browser.
+* A load balancer will be used to route/trasmit traffic/request from client to the appropraite backend service and vice versa.
+
+********** Load Balancer Service *************
+* A load balancer service is a configuration file with a set of instructions one of which is to instruct
+  a Cloud Service Provider (AWS, Google) to provision a Load balancer for a pod.
+* It's different from other kubernetes Objects that are created within a cluster, it's fed to the cluster.
+* The service provider uses the instruction to create a Load Balancer which will handle traffic from the outside world to a pod. 
+
+********** Ingress or Ingress Controller *************
+* Unlike the Load Balancer Service that reaches out to Kubernetes with a config file that is used for creating a Load Balancer, 
+  Ingress/Ingress controller is a pod (like other pods - post, query, comments, etc) with a set of routing rules to distribute 
+  traffic to other services.
+* The Ingress/Ingress Controller works along side a Load Balancer (Note - not a Load Balancer Service) that is provisioned by a Cloud Provider.
+
+****** Load Balancer vs Ingress/Ingress Controller *************
+* The load balancer is just about getting traffic into our cluster.
+* This ingress thing is about routing rules or having some routing configuration that's going to send requests off to the appropriate pod.
+
+****** Ingress-NGINX *********************
+* This is a project or a open source library that's going to create a Load Balancer service inside of our cluster, plus an ingress automatically.
+* The cmd "kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml"
+  will install the Load Balancer and Ingress Controller into our cluster, we can then create routing configurations for Ingress controller to direct routing to appropriate pods.
+* Ingress Controller will detect the router rules in a config we pass into the cluster, then will create an internal 
+  matching routing rules which will be used to direct routes to appropriate pods.
+
