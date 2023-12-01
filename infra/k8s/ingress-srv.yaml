@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules: # rules is an array of all the routing rules we want to apply to teach the Ingress Controller on how to route incoming traffic to appropriate pods.
-    - host: posts.com
+    - host: posts.com # ingress assumes that the app using this configuration is hosted at the domain 'posts.com'. we need to edit our hosts file (/etc/hosts) such that 'post.com' will point to our local machine instead of an outside domain (post.com) which might actually exist.
       http:
         paths:
           - path: /posts # path that receives incoming traffic to Posts app

@@ -204,3 +204,9 @@ Note - containerA and containerB are microservices. PORT represents the port whe
 * Ingress Controller will detect the router rules in a config we pass into the cluster, then will create an internal 
   matching routing rules which will be used to direct routes to appropriate pods.
 
+********** Ingress Controller 'hosts' Rule ************
+* In the yaml configuration file, under 'Rules' we have 'hosts' with a value of 'posts.com'.
+* This is required to trick ingress that the request is coming from that website/domain so it can apply all the stated rules to it.
+* However, this requires that we edit out system 'hosts' fle located at /etc/hosts for Mac users. we will point the website name 'posts.com' to our localhost.
+* Thus, the request all request from ingress controller to 'posts.com' will be routed to our localhost instead of any such domain in the outside world.
+
