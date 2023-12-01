@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment #the name of the Deployment running in our cluster
+spec:
+  replicas: 1 # replicas is the number of pods we want to create
+  selector:
+    matchLabels: #looks at all the created pods and finds one with label 'app' matching 'event-bus'
+      app: client #label
+  template: # describes how the pod(s) should be created by the Deployment
+    metadata:
+      labels:
+        app: client # an identifier/label for the pod that will be created by the Deployment
+    spec:  #specification of the pod to be created
+      containers:
+        - name: client # '-' means array
+          image: 23101/client
+--- # Marks the end of a configuration / the beginning of another. In this case, we have the Deployment & Service config for a single pod in the same file.
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  type: ClusterIP # Even when 'type' is not specified, 'ClusterIP' is used by default.
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
