@@ -1,6 +1,10 @@
 #Base Image file
 FROM node:alpine
 
+# Add the following lines to address create-react-app docker issues
+ENV CI=true
+ENV WDS_SOCKET_PORT=0
+
 # work dir to use
 WORKDIR /app
 
@@ -16,4 +20,3 @@ COPY ./ ./
 
 #provide command to run/start the container
 CMD ["npm", "start"]
-
