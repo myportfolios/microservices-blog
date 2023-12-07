@@ -4,16 +4,38 @@ metadata:
   name: ingress-srv
   annotations: # This annotaions section tells the Ingress Controller that we are going to feed it some routing rules. The ingress Controller continuously scans all the objects and config files for the annottation rules. 
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   ingressClassName: nginx
   rules: # rules is an array of all the routing rules we want to apply to teach the Ingress Controller on how to route incoming traffic to appropriate pods.
     - host: posts.com # ingress assumes that the app using this configuration is hosted at the domain 'posts.com'. we need to edit our hosts file (/etc/hosts) such that 'post.com' will point to our local machine instead of an outside domain (post.com) which might actually exist.
       http:
         paths:
-          - path: /posts # path that receives incoming traffic to Posts app
+          - path: /posts/create # path that receives incoming traffic to Posts app
             pathType: ImplementationSpecific
             backend: 
               service:
                 name: posts-clusterip-srv # the clusterIP sevice endpoint for Posts app
                 port:
                   number: 8001 # the port Posts app is running on
+          - path: /posts
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: query-srv # the clusterIP sevice endpoint for Query app
+                port:
+                  number: 8000 # the port Query app is running on
+          - path: /posts/?(.*)/comments #regex used
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv # the clusterIP sevice endpoint for Comments app
+                port:
+                  number: 8002 # the port Comments app is running on
+          - path: /?(.*) #for the react client app. This allows ingress to route to the react app for all routes starting with '/'. That's why this route is added as the last route (Ingress starts from top to bottom).# if the client route is at the very first it will make all request to always/only go to the client app.
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv # the clusterIP sevice endpoint for Client app
+                port:
+                  number: 3000 # the port Comments app is running on

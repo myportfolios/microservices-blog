@@ -219,3 +219,8 @@ Note - containerA and containerB are microservices. PORT represents the port whe
   We now have 2 paths with the same name which will definitely confuse Ingress controller. In such a case we need to make the paths unique by changing one or the other.
 Pls NOTE - There are tools that will effectively handle this porocess in a production env.
 
+*************** Ingress NGINX and Wide Card **************
+* NGINX doesn't support the use of wide card, thus a path "/path/:id/path" will not work.
+* To resolve this we need to use a regex expression, the above path becomes "/path/?(.*)/path
+* However, we need to pass a rule to nginx (under 'annotations')that allows the use of regex
+  ** The rule is "nginx.ingress.kubernetes.io/use-regex: 'true'"
