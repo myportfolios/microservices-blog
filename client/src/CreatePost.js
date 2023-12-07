@@ -7,7 +7,7 @@ export default function CreatePost() {
   const [title, setTitle] = useState(emptyString)
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await axios.post('http://post.com/posts/create', {
+    await axios.post('http://posts.com/posts/create', {
       title,
     })
     setTitle(emptyString)

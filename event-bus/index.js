@@ -1,9 +1,12 @@
 const express = require('express')
+const cors = require('cors')
 const bodyParser = express.json()
 const axios = require('axios')
 
 //instantiate app
 const app = express()
+//cors
+app.use(cors())
 //use middlewares
 app.use(bodyParser)
 //empty array to take in the list of events received from all the services
