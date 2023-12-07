@@ -210,3 +210,12 @@ Note - containerA and containerB are microservices. PORT represents the port whe
 * However, this requires that we edit out system 'hosts' fle located at /etc/hosts for Mac users. we will point the website name 'posts.com' to our localhost.
 * Thus, the request all request from ingress controller to 'posts.com' will be routed to our localhost instead of any such domain in the outside world.
 
+************ Ingress Route Identification *********
+* In ingress config file, Ingress only uses the path (for example /posts, /query) to determine/identify which pod to route request to.
+** Hence, the method (POST,GET) doesn't play any role in this identification process. The method 'POST' in 'POST/post' as an example
+   doesn't serve any purpose and must be removed. Removing the method leads to issues where multiple paths exist with the same name.
+    POST/commnents ------- >removing the method -----------> comments
+    GET/comments ------- > removing the method -----------> comments
+  We now have 2 paths with the same name which will definitely confuse Ingress controller. In such a case we need to make the paths unique by changing one or the other.
+Pls NOTE - There are tools that will effectively handle this porocess in a production env.
+
