@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl: # starting from this line to the path below is to tell skaffold that there is a collection of config files to be used by Kubernetes in this folder.
+    manifests: # Skafold will watch all the config files and anytime there is a change in any file it will automatically reapply the configurations stated in the file.
+      - ./infra/k8s/* # Hence skaffold does 3 things - 1. when we start skaffold /2.when changes are made to these file skaffold will apply all the rules in the file. 3 when we stop skaffold it will delete ONLY the objects created by these files (NOT the file itself)
+build:
+  local:
+    push: false # the default behaviour of skaffold is to push images to docker after building the images, this line is to disable that default behaviour.
+  artifacts: # This line tells skaffold how to handle the pod associated with the 'client' app when changes occur. There are 2 ways: (1)if any JavaScript changes 
+    - image: 23101/client #  are made in the 'src' directory, skaffold will throw the changed file directly into our pod. (apply a copy of the content directly into our pod. This way our pod will always have the latest code inside of it)
+      context: client #2. if the changes are made outside the 'src' dir (for example,, installation of a ne dependency will change our package.json and node_modules), skaffold will rebuild the entire image and update the deployment tied to it.
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.js'
+    - image: 23101/comments
+      context: comments 
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js' # no src directly, we just take all the js files directly
+    - image: 23101/event-bus 
+      context: event-bus 
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js' # no src directly, we just take all the js files directly
+    - image: 23101/moderation 
+      context: moderation 
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js' # no src directly, we just take all the js files directly
+    - image: 23101/posts 
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js' # no src directly, we just take all the js files directly
+    - image: 23101/query 
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: '*.js' # no src directly, we just take all the js files directly

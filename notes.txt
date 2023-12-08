@@ -224,3 +224,18 @@ Pls NOTE - There are tools that will effectively handle this porocess in a produ
 * To resolve this we need to use a regex expression, the above path becomes "/path/?(.*)/path
 * However, we need to pass a rule to nginx (under 'annotations')that allows the use of regex
   ** The rule is "nginx.ingress.kubernetes.io/use-regex: 'true'"
+
+
+********** Skaffold ****************
+* A tool that facilitates continuous development for Kubernetes applications. It runs outside of our clusters.
+* In our root directory, create a skaffold.yaml file. This file will contain the configurations that skaffold will use to manage all sub-projects in our clusters.
+
+********** Updating Skaffold configuration based on installed version **************
+* run "skaffold fix" to see the updated version of your skaffold configuration. If you want to upgrade/update your configuration you can copy and paste the output 
+  ** from this command into your skaffold.yaml file.
+* run "skaffold schema list" to return the API versions that are supported by the version of Skaffold you have installed.
+
+***** Running Skaffold **********
+* In your root directory with the skaffold.yaml file run the command "skaffold dev" to start/run skaffold
+* Using skaffold saves us the dtress of always manually building image, pushing to docker, applying Deployments/services (creation of pods and services), even starting ingress controller to manage routing.
+  ** All these are noe handles using skaffold by running the single command "skaffold dev" 
